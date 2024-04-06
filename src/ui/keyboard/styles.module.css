@@ -1,0 +1,67 @@
+.wrapper {
+  width: 80%;
+  max-width: 900px;
+  margin-top: 1rem;
+  container-type: inline-size;
+}
+
+.keyboard {
+  aspect-ratio: 29 / 10;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5cqi;
+  font-size: 1.8cqw;
+}
+
+.row {
+  flex: 1;
+  display: flex;
+  gap: 0.5cqi;
+}
+
+.key {
+  flex: 1;
+  background-color: rgb(28, 29, 31);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.25cqi;
+  color: rgb(234, 236, 240);
+  user-select: none;
+  border: 1px solid rgb(28, 29, 31);
+  border-bottom-color: #3e3e3e;
+  box-shadow: 0 0.1cqi 0.01cqi 0.02cqi #1c1c1c;
+}
+
+.key.dualLabel {
+  flex-direction: column;
+  gap: 0.5cqi;
+}
+.key.dualLabel span:first-child {
+  font-size: 0.7em;
+}
+.key.dualLabel span:last-child {
+  font-size: 0.95em;
+}
+
+.key.tab,
+.key.del {
+  flex: 1.5;
+}
+
+.key.caps,
+.key.enter {
+  flex: 1.75;
+}
+
+.key.shift {
+  flex: 2;
+}
+
+.key.space {
+  flex: 1.5;
+}
+
+.spacer {
+  flex: 1;
+}

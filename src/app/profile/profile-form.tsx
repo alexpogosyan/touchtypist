@@ -56,7 +56,6 @@ export default function ProfileForm({ user }: { user: User | null }) {
       });
 
       if (error) throw error;
-      alert("Profile updated!");
     } catch (error) {
       alert("Error updating the data!");
     } finally {
@@ -65,20 +64,7 @@ export default function ProfileForm({ user }: { user: User | null }) {
   }
 
   return (
-    <div className="form-widget">
-      <div>
-        <label htmlFor="email">Email</label>
-        <input id="email" type="text" value={user?.email} disabled />
-      </div>
-      <div>
-        <label htmlFor="name">Name</label>
-        <input
-          id="name"
-          type="text"
-          value={name || ""}
-          onChange={(e) => setName(e.target.value)}
-        />
-      </div>
+    <div className="flex-1 flex flex-col w-1/2 justify-center gap-2 text-foreground">
       <Avatar
         uid={user?.id ?? null}
         url={avatar_url}
@@ -88,23 +74,50 @@ export default function ProfileForm({ user }: { user: User | null }) {
           updateProfile({ name, avatar_url: url });
         }}
       />
+      <label className="text-md" htmlFor="email">
+        Email
+      </label>
+      <input
+        className="rounded-md px-4 py-2 bg-inherit border mb-6"
+        name="email"
+        id="email"
+        value={user?.email}
+        disabled
+      />
 
-      <div>
-        <button
-          className="button primary block"
-          onClick={() => updateProfile({ name, avatar_url })}
-          disabled={loading}
-        >
-          {loading ? "Loading ..." : "Update"}
-        </button>
-      </div>
+      <label className="text-md" htmlFor="name">
+        Name
+      </label>
+      <input
+        className="rounded-md px-4 py-2 bg-inherit border mb-6"
+        type="text"
+        id="name"
+        name="name"
+        value={name || ""}
+        onChange={(e) => setName(e.target.value)}
+      />
 
-      <div>
-        <form action="/auth/signout" method="post">
-          <button className="button block" type="submit">
-            Sign out
+      <div className="flex justify-between">
+        <div>
+          <button
+            className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
+            onClick={() => updateProfile({ name, avatar_url })}
+            disabled={loading}
+          >
+            {loading ? "Loading ..." : "Update"}
           </button>
-        </form>
+        </div>
+
+        <div>
+          <form action="/auth/logout" method="post">
+            <button
+              className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
+              type="submit"
+            >
+              Logout
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

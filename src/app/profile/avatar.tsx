@@ -69,7 +69,7 @@ export default function Avatar({
   };
 
   return (
-    <div>
+    <div className="mb-4">
       {avatarUrl ? (
         <Image
           width={size}
@@ -86,8 +86,8 @@ export default function Avatar({
         />
       )}
       <div style={{ width: size }}>
-        <label className="button primary block" htmlFor="single">
-          {uploading ? "Uploading ..." : "Upload"}
+        <label className="text-blue-500 cursor-pointer" htmlFor="single">
+          {uploading ? "Uploading ..." : "Upload new"}
         </label>
         <input
           style={{
