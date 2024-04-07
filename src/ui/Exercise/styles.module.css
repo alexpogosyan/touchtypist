@@ -1,0 +1,19 @@
+.wrapper {
+  font-family: monospace;
+}
+
+.beforePos {
+  color: #ccc;
+}
+
+.atPos {
+  text-decoration: underline;
+}
+
+.afterPos {
+  color: black;
+}
+
+.error {
+  color: red;
+}

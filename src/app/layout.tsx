@@ -5,6 +5,7 @@ const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : "http://localhost:3000";
 import "./globals.css";
+import Link from "next/link";
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
@@ -25,6 +26,7 @@ export default function RootLayout({
             <nav className="w-full flex justify-center border-b border-b-foreground/10 h-12">
               <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
                 <Logo />
+                <Link href="/exercise">Exercises</Link>
                 <AuthButton />
               </div>
             </nav>

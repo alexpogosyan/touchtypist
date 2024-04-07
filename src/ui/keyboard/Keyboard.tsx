@@ -105,8 +105,8 @@ export default function Keyboard() {
             <span>;</span>
           </div>
           <div className={clsx(styles.key, styles.dualLabel)}>
-            <span>"</span>
-            <span>'</span>
+            <span>&quot;</span>
+            <span>&apos;</span>
           </div>
           <div className={clsx(styles.key, styles.enter)}>enter</div>
         </div>
