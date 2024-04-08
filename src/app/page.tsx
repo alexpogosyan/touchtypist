@@ -1,4 +1,4 @@
-import Keyboard from "@/ui/keyboard/Keyboard";
+import Keyboard from "@/ui/kb/Keyboard";
 import { createClient } from "@/utils/supabase/server";
 
 export default async function Index() {
@@ -9,7 +9,7 @@ export default async function Index() {
   } = await supabase.auth.getUser();
 
   return (
-    <main className="flex-1 flex flex-col gap-6 border-solid w-full items-center">
+    <main className="flex w-full flex-1 flex-col items-center gap-6 border-solid">
       <Keyboard />
     </main>
   );

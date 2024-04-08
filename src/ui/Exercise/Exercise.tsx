@@ -1,42 +1,32 @@
 "use client";
-import clsx from "clsx";
 import { useEffect, useState } from "react";
-import styles from "./styles.module.css";
+import { isTypeable } from "@/utils/keyboard";
+import TypingArea from "./TypingArea";
+import Keyboard from "../kb/Keyboard";
+import { ExerciseData } from "@/types/Exercise";
 
-interface Props {
+export interface Props {
   exercise: ExerciseData;
 }
 
-interface ExerciseData {
-  id: string;
-  title: string;
-  symbols: ExerciseSymbol[];
-}
-
-interface ExerciseSymbol {
-  symbol: string;
-  key: string;
-  modifier?: string;
-}
-
-export default function Exercise(props: Props) {
+export default function Exercise({ exercise }: Props) {
   const [pos, setPos] = useState(0);
-  const [wrongKey, setWrongKey] = useState(false);
-  const text = props.exercise.symbols.map((s) => s.symbol);
-  console.log("renderin");
+  const [wrongKey, setWrongKey] = useState<string | null>(null);
 
+  const text = exercise.symbols.map((s) => s.symbol);
+
+  // todo: extract to a hook
   useEffect(() => {
     function handleKeydown(e: KeyboardEvent) {
-      console.log("key event", e);
-      const expected = text[pos];
+      console.log("e", e.code);
 
-      if (e.key === "Shift") return;
+      if (!isTypeable(e.key)) return;
 
-      if (e.key === expected) {
+      if (e.key === text[pos]) {
         setPos((p) => p + 1);
-        setWrongKey(false);
+        setWrongKey(null);
       } else {
-        setWrongKey(true);
+        setWrongKey(e.key);
       }
     }
     window.addEventListener("keydown", handleKeydown);
@@ -46,28 +36,18 @@ export default function Exercise(props: Props) {
     };
   }, [pos, text]);
 
-  function getText(symbols: ExerciseSymbol[]) {
-    return symbols.map((s, index) => (
-      <span
-        key={`${s.key}${index}`}
-        className={clsx({
-          [styles.beforePos]: index < pos,
-          [styles.atPos]: index === pos,
-          [styles.afterPos]: index > pos,
-          [styles.error]: index === pos && wrongKey,
-        })}
-      >
-        {s.symbol}
-      </span>
-    ));
-  }
-
   return (
     <>
-      <div className="text-2xl font-mono tracking-wider bg-zinc-100 px-4 py-1">
-        {getText(props.exercise.symbols)}
+      <div className="mb-8 w-4/5 bg-zinc-100 px-4 py-1 text-center font-mono text-2xl tracking-wider">
+        <TypingArea
+          symbols={exercise.symbols}
+          currentPos={pos}
+          wrongKey={wrongKey}
+        />
       </div>
-      <div>{pos >= text.length ? "Good job" : ""}</div>
+      <div className="w-2/3">
+        <Keyboard nextSymbol={text[pos]} />
+      </div>
     </>
   );
 }

@@ -1,7 +1,5 @@
 .wrapper {
-  width: 80%;
-  max-width: 900px;
-  margin-top: 1rem;
+  width: 100%;
   container-type: inline-size;
 }
 
@@ -44,24 +42,29 @@
   font-size: 0.95em;
 }
 
-.key.tab,
-.key.del {
+.Tab,
+.Delete {
   flex: 1.5;
 }
 
-.key.caps,
-.key.enter {
+.CapsLock,
+.Enter {
   flex: 1.75;
 }
 
-.key.shift {
+.ShiftLeft,
+.ShiftRight {
   flex: 2;
 }
 
-.key.space {
+.Space {
   flex: 1.5;
 }
 
-.spacer {
-  flex: 1;
+.next {
+  background-color: green;
+}
+
+.wrong {
+  background-color: red;
 }
