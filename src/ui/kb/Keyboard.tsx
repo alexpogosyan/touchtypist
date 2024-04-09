@@ -1,15 +1,20 @@
 import styles from "./styles.module.css";
-import { symbolToKey, kb } from "@/utils/keyboard";
+import { symbolToKeys, kb, getWrongKeys } from "@/utils/keyboard";
 import Key from "./Key";
 
 interface Props {
   nextSymbol: string;
-  wrongSymbol?: string;
+  wrongSymbol: string | null;
+  lastSymbol: string | null;
 }
 
-export default function Keyboard({ nextSymbol, wrongSymbol }: Props) {
-  const { key: nextKey, shift: nextShift } = symbolToKey(nextSymbol);
-  const { key: wrongKey } = symbolToKey(wrongSymbol ?? "");
+export default function Keyboard({
+  lastSymbol,
+  nextSymbol,
+  wrongSymbol,
+}: Props) {
+  const nextKeys = symbolToKeys(nextSymbol, lastSymbol);
+  const wrongKeys = getWrongKeys(wrongSymbol);
 
   return (
     <div className={styles.wrapper}>
@@ -19,8 +24,13 @@ export default function Keyboard({ nextSymbol, wrongSymbol }: Props) {
             {row.map((k, index) => (
               <Key
                 k={k}
-                isNext={k.code === nextKey?.code || k.code === nextShift}
-                isWrong={k.code === wrongKey?.code}
+                isNext={!!nextKeys.find((nk) => nk.code === k.code)}
+                isWrong={
+                  !!(
+                    wrongKeys.length > 0 &&
+                    wrongKeys.find((wk) => wk.code === k.code)
+                  )
+                }
                 key={`key-${index}`}
               />
             ))}

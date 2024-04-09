@@ -17,3 +17,11 @@
 .error {
   color: red;
 }
+
+.returnKey {
+  background-color: #1c1d1f;
+  padding: 0 12px;
+  font-size: 18px;
+  color: rgb(234, 236, 240);
+  border-radius: 4px;
+}

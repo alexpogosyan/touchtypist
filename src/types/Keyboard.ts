@@ -4,4 +4,6 @@ export interface Key {
   label?: string;
 }
 
-export type Keyboard = Key[][];
+type Row = Key[];
+
+export type Keyboard = Row[];

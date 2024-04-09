@@ -1,4 +1,4 @@
-import { Keyboard } from "@/types/Keyboard";
+import { Key, Keyboard } from "@/types/Keyboard";
 
 export const kb: Keyboard = [
   [
@@ -63,28 +63,74 @@ export const kb: Keyboard = [
     { code: "Slash", symbols: ["/", "?"] },
     { code: "ShiftRight", label: "Shift" },
   ],
-  [{ code: "", symbols: [" "] }],
+  [
+    { code: "SpaceLeft", symbols: [" "] },
+    { code: "SpaceRight", symbols: [" "] },
+  ],
 ];
 
+function getKeyByCode(code: string): Key {
+  return kb.flat().find((k) => k.code === code)!;
+}
+
+function getKeyBySymbol(symbol: string | undefined | null): Key | undefined {
+  if (symbol) return kb.flat().find((k) => k.symbols?.includes(symbol));
+}
+
 const typeables =
-  " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890`~!@#$%^&*()_+[]{}|\\,./<>?";
+  " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890`~!@#$%^&*()_+[]{}|\\;:'\",./<>?";
 
 export function isTypeable(key: string) {
   return typeables.includes(key);
 }
 
-function requiresShift(symbol: string) {
-  // todo: some keys are ok with either left or right shift, like B and ^
-  const leftShifted = '^&*()_+YUIOP{}|HJKL:"BNM<>?';
-  const rightShifted = "~!@#$%QWERTASDFGZXCV";
+function requiredShift(symbol: string) {
+  const leftShifted = '^&*()_+YUIOP{}|HJKL:"NM<>?';
+  const rightShifted = "~!@#$%QWERTASDFGZXCVB";
 
-  if (leftShifted.includes(symbol)) return "ShiftLeft";
-  if (rightShifted.includes(symbol)) return "ShiftRight";
-  return false;
+  if (leftShifted.includes(symbol)) return getKeyByCode("ShiftLeft");
+  if (rightShifted.includes(symbol)) return getKeyByCode("ShiftRight");
+  return null;
 }
 
-export function symbolToKey(symbol: string) {
-  const key = kb.flat().find((k) => k.symbols?.includes(symbol));
-  const shift = requiresShift(symbol);
-  return { key, shift };
+const bothSpaces = [getKeyByCode("SpaceLeft"), getKeyByCode("SpaceRight")];
+
+export function getWrongKeys(symbol: string | null): Key[] {
+  let keys: Key[] = [];
+  if (symbol == " ") {
+    return bothSpaces;
+  }
+
+  let key = getKeyBySymbol(symbol);
+  if (key) keys.push(key);
+
+  return keys;
+}
+
+export function getNextSpace(preceding: string | null): Key[] {
+  const leftHandKeys = "`12345qwertasdfgzxcv";
+  const rightHandKeys = "7890-=yuiop[]\\hjkl;'nm,./";
+
+  if (!preceding) return bothSpaces;
+
+  return leftHandKeys.includes(preceding)
+    ? [getKeyByCode("SpaceRight")]
+    : rightHandKeys.includes(preceding)
+      ? [getKeyByCode("SpaceLeft")]
+      : bothSpaces;
+}
+
+export function symbolToKeys(symbol: string, preceding: string | null): Key[] {
+  if (symbol === " ") {
+    return getNextSpace(preceding);
+  }
+
+  const key = getKeyBySymbol(symbol);
+  const shift = requiredShift(symbol);
+
+  let keys: Key[] = [];
+  if (key) keys.push(key);
+  if (shift) keys.push(shift);
+
+  return keys;
 }

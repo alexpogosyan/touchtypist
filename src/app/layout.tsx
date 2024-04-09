@@ -1,11 +1,9 @@
 import AuthButton from "../ui/AuthButton";
 import { inter } from "@/ui/fonts";
 import Logo from "@/ui/Logo";
-const defaultUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : "http://localhost:3000";
 import "./globals.css";
-import Link from "next/link";
+
+const defaultUrl = "https://www.touchtypist.app";
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
@@ -21,18 +19,22 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.className} aintialiased`}>
       <body className="bg-background text-foreground">
-        <main className="min-h-screen flex flex-col items-center">
-          <div className="flex-1 w-full flex flex-col gap-20 items-center">
-            <nav className="w-full flex justify-center border-b border-b-foreground/10 h-12">
-              <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
+        <main className="flex min-h-screen flex-col items-center">
+          <div className="flex w-full flex-1 flex-col items-center gap-20">
+            <nav className="flex h-12 w-full justify-center border-b border-b-foreground/10">
+              <div className="flex w-full max-w-4xl items-center justify-between p-3 text-sm">
                 <Logo />
-                <Link href="/exercise">Exercises</Link>
                 <AuthButton />
               </div>
             </nav>
             {children}
-            <footer className="w-full border-t border-t-foreground/10 flex justify-center items-center text-center text-xs h-12">
-              2024
+            <footer className="flex h-12 w-full items-center justify-center border-t border-t-foreground/10 text-center text-xs">
+              <a
+                className="text-blue-600 underline"
+                href="https://github.com/alexpogosyan/touchtypist"
+              >
+                Github
+              </a>
             </footer>
           </div>
         </main>

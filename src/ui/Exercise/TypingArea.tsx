@@ -1,9 +1,8 @@
 import clsx from "clsx";
 import styles from "./styles.module.css";
-import { ExerciseSymbol } from "@/types/Exercise";
 
 interface Props {
-  symbols: ExerciseSymbol[];
+  symbols: string;
   currentPos: number;
   wrongKey: string | null;
 }
@@ -11,9 +10,9 @@ interface Props {
 export default function TypingArea({ symbols, currentPos, wrongKey }: Props) {
   return (
     <>
-      {symbols.map((s, index) => (
+      {symbols.split("").map((s, index) => (
         <span
-          key={`${s.symbol}${index}`}
+          key={`${s}${index}`}
           className={clsx({
             [styles.beforePos]: index < currentPos,
             [styles.atPos]: index === currentPos,
@@ -21,7 +20,7 @@ export default function TypingArea({ symbols, currentPos, wrongKey }: Props) {
             [styles.error]: index === currentPos && wrongKey,
           })}
         >
-          {s.symbol}
+          {s}
         </span>
       ))}
     </>

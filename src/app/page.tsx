@@ -1,4 +1,5 @@
-import Keyboard from "@/ui/kb/Keyboard";
+import { getExerciseById } from "@/exercises";
+import Exercise from "@/ui/Exercise/Exercise";
 import { createClient } from "@/utils/supabase/server";
 
 export default async function Index() {
@@ -9,8 +10,8 @@ export default async function Index() {
   } = await supabase.auth.getUser();
 
   return (
-    <main className="flex w-full flex-1 flex-col items-center gap-6 border-solid">
-      <Keyboard />
+    <main className="flex w-full flex-1 flex-col items-center">
+      <Exercise exercise={getExerciseById("1")!} />
     </main>
   );
 }

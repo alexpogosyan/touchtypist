@@ -17,6 +17,11 @@
   gap: 0.5cqi;
 }
 
+.row:last-child {
+  gap: 0;
+  padding: 0 20%;
+}
+
 .key {
   flex: 1;
   background-color: rgb(28, 29, 31);
@@ -57,14 +62,27 @@
   flex: 2;
 }
 
-.Space {
-  flex: 1.5;
+.SpaceLeft,
+.SpaceRight {
+  box-shadow: none;
+}
+
+.SpaceLeft {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right-width: 0;
+}
+
+.SpaceRight {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left-width: 0;
 }
 
 .next {
-  background-color: green;
+  background-color: #9ab976;
 }
 
 .wrong {
-  background-color: red;
+  background-color: #d65956;
 }
