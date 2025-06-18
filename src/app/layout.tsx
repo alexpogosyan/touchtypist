@@ -1,4 +1,3 @@
-import AuthButton from "../ui/AuthButton";
 import { inter } from "@/ui/fonts";
 import Logo from "@/ui/Logo";
 import "./globals.css";
@@ -7,7 +6,7 @@ const defaultUrl = "https://www.touchtypist.app";
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Touchtypist | Learn to type fast",
+  title: "Touchtypist | Learn touch typing ",
   description: "Learn touch typing",
 };
 
@@ -24,7 +23,6 @@ export default function RootLayout({
             <nav className="flex h-12 w-full justify-center border-b border-b-foreground/10">
               <div className="flex w-full max-w-4xl items-center justify-between p-3 text-sm">
                 <Logo />
-                <AuthButton />
               </div>
             </nav>
             {children}
